@@ -1,6 +1,6 @@
 # lita-kintai
 
-TODO: Add a description of the plugin.
+しごはじしごとわた
 
 ## Installation
 
