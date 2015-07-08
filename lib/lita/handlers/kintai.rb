@@ -4,7 +4,8 @@ module Lita
       route(/gyudon/i, :gyudon) # 正規表現にマッチしたら、指定されたメソッド名を呼び出す
 
       def gyudon(response)
-        gyudonPlz = "あ、チーズ牛丼中盛りツユダクで。"
+        gyudonList = %w(チーズ キムチ カレー合いかけ ネギ玉 山かけ).freeze
+        gyudonPlz = "あ、#{gudonList.sample}牛丼中盛りツユダクで。"
         response.reply(gyudonPlz)
       end
     end
