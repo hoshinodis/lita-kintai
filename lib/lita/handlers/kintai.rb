@@ -5,7 +5,7 @@ module Lita
 
       def gyudon(response)
         gyudonList = %w(チーズ キムチ カレー合いかけ ネギ玉 山かけ).freeze
-        gyudonPlz = "あ、#{gudonList.sample}牛丼中盛りツユダクで。"
+        gyudonPlz = "あ、#{gyudonList.sample}牛丼中盛りツユダクで。"
         response.reply(gyudonPlz)
       end
     end
