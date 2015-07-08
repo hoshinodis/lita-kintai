@@ -7,14 +7,6 @@ module Lita
         gyudonPlz = "あ、チーズ牛丼中盛りツユダクで。"
         response.reply(gyudonPlz)
       end
-
-      route(/^tanzaku\s+([^ ]+)/i, :tanzaku) 
-
-      def tanzaku(response)
-        negaigoto = response.args[0].chars
-        tanzaku = "┏┷┓\n" + negaigoto.map{|item| "┃" + item + "┃\n"}.join + "┗━★"
-        response.reply(tanzaku.gsub("ー", "｜"))
-      end
     end
 
     Lita.register_handler(Kintai)
