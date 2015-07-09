@@ -1,12 +1,12 @@
 module Lita
   module Handlers
     class Kintai < Handler
-      route(/gyudon/i, :gyudon) # 正規表現にマッチしたら、指定されたメソッド名を呼び出す
+      route(/しごはじ/i, :startWork) # 正規表現にマッチしたら、指定されたメソッド名を呼び出す
 
-      def gyudon(response)
-        gyudonList = %w(チーズ キムチ カレー合いかけ ネギ玉 山かけ).freeze
-        gyudonPlz = "あ、#{gyudonList.sample}牛丼中盛りツユダクで。"
-        response.reply(gyudonPlz)
+      def startWork(response)
+        time = Time.new
+        startResponse = "#{response.user.name}さんが#{time.hour}時にしごはじしました"
+        response.reply(startResponse)
       end
     end
 
