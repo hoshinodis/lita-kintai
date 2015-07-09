@@ -5,8 +5,16 @@ module Lita
 
       def startWork(response)
         time = Time.new
-        startResponse = "#{response.user.name}さんが#{time.hour}時にしごはじしました"
-        response.reply(startResponse)
+        startReply = "#{response.user.name}さんが#{time.hour}時に出社しました"
+        response.reply(startReply)
+      end
+
+      route(/しごとわた/i, :endWork)
+
+      def endWork(response)
+        time = Time.new
+        endReply = "#{response.user.name}さんが#{time.hour}時に退社しました"
+        response.reply(endReply)
       end
     end
 
