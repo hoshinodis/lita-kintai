@@ -1,20 +1,20 @@
 module Lita
   module Handlers
     class Kintai < Handler
-      route(/しごはじ/i, :startWork) # 正規表現にマッチしたら、指定されたメソッド名を呼び出す
+      route(/しごはじ/i, :start_work) # 正規表現にマッチしたら、指定されたメソッド名を呼び出す
 
-      def startWork(response)
+      def start_work(response)
         time = Time.new
-        startReply = "#{response.user.name}さんが#{time.hour}時に出社しました"
-        response.reply(startReply)
+        start_reply = "#{response.user.name}さんが#{time.hour}時に出社しました"
+        response.reply(start_reply)
       end
 
-      route(/しごとわた/i, :endWork)
+      route(/しごとわた/i, :end_work)
 
-      def endWork(response)
+      def end_work(response)
         time = Time.new
-        endReply = "#{response.user.name}さんが#{time.hour}時に退社しました"
-        response.reply(endReply)
+        end_reply = "#{response.user.name}さんが#{time.hour}時に退社しました"
+        response.reply(end_reply)
       end
     end
 
