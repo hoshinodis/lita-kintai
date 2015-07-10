@@ -6,17 +6,26 @@ module Lita
 
       def start_work(response)
         time = Time.now
-        start_reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に出社しました"
-        response.reply(start_reply)
+        reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に出社しました"
+        response.reply(reply)
       end
 
       route(/しごとわた/i, :end_work)
 
       def end_work(response)
         time = Time.now
-        end_reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に退社しました"
-        response.reply(end_reply)
+        reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に退社しました"
+        response.reply(reply)
       end
+
+      route(/しごとおわらない/i, :endless_work)
+
+      def endless_work(response)
+        time = Time.now
+        reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に嘆きました"
+        response.reply(reply)
+      end
+
     end
 
     Lita.register_handler(Kintai)
