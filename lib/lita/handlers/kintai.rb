@@ -6,7 +6,7 @@ module Lita
 
       def start_work(response)
         time = Time.now
-        start_reply = "#{response.user.name}さんが#{self.time.strftime('%H時%M分')}に出社しました"
+        start_reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に出社しました"
         response.reply(start_reply)
       end
 
@@ -14,7 +14,7 @@ module Lita
 
       def end_work(response)
         time = Time.now
-        end_reply = "#{response.user.name}さんが#{self.time.strftime('%H時%M分')}に退社しました"
+        end_reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に退社しました"
         response.reply(end_reply)
       end
     end
