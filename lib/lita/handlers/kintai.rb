@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class Kintai < Handler
 
-      route(/しごはじ/i, :start_work) 
+      route(/しごはじ|お+仕事|しごと+はじめ|始め/, :start_work) 
 
       def start_work(response)
         time = Time.now
@@ -10,7 +10,7 @@ module Lita
         response.reply(reply)
       end
 
-      route(/しごとわた/i, :end_work)
+      route(/しごとわた|お+仕事|しごと+おしまい/, :end_work)
 
       def end_work(response)
         time = Time.now
@@ -18,7 +18,7 @@ module Lita
         response.reply(reply)
       end
 
-      route(/しごとおわらない/i, :endless_work)
+      route(/しごとおわらない/, :endless_work)
 
       def endless_work(response)
         time = Time.now
