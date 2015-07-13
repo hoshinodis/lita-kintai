@@ -10,7 +10,7 @@ module Lita
         response.reply(reply)
       end
 
-      route(/^しごはじ|((^お仕事|^おしごと)+おしまい)/, :end_work)
+      route(/^しごとわた|((^お仕事|^おしごと)+おしまい)/, :end_work)
 
       def end_work(response)
         time = Time.now
