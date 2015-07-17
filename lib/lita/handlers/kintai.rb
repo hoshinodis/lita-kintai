@@ -18,15 +18,7 @@ module Lita
         response.reply(reply)
       end
 
-      route(/しごとおわらない/, :endless_work)
-
-      def endless_work(response)
-        time = Time.now
-        reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に嘆きました"
-        response.reply(reply)
-      end
-
-      route(/(しごと|仕事)+ない/, :grieve_work)
+      route(/(しごと|仕事)+ない$/, :grieve_work)
 
       def grieve_work(response)
         time = Time.now
