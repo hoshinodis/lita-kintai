@@ -7,10 +7,10 @@ module Lita
         word = response.args.join
         word = "死" if word.nil?
         suddenly_word = "＿"
-        (word.length + 5).times{suddenly_word += "人"}
+        (word.length + 2).times{suddenly_word += "人"}
         suddenly_word += "＿\n＞ 突然の#{word} ＜\n￣"
-        (word.length + 5).times{suddenly_word += "Y^"}
-        suddenly_word += "￣"
+        (word.length).times{suddenly_word += "Y^"}
+        suddenly_word += "Y￣"
         response.reply(suddenly_word)
       end
 
