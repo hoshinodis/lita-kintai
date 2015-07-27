@@ -13,9 +13,9 @@ module Lita
         response.reply(suddenly_word)
       end
 
-      route(/info response/i, :info_response)
-      def info_response(response)
-        reply = "#{response}"
+      route(/info message/i, :info_message)
+      def info_message(response)
+        reply = "#{response.message.source}\n#{response.message}"
         response.reply(reply)
       end
 
