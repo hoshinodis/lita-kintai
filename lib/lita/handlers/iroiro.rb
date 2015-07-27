@@ -4,7 +4,7 @@ module Lita
 
       route(/^突然の/i, :suddenly) 
       def suddenly(response)
-        word = response.message
+        word = response.args.join
         suddenly_word = "＿"
         (word.length + 2).times{suddenly_word += "人"}
         suddenly_word += "＿\n＞ #{word} ＜\n￣"
