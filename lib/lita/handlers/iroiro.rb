@@ -10,7 +10,7 @@ module Lita
               }.inject(:+) / 2
         suddenly_word = "＿#{ '人' * (len + 1) }＿\n" +
                         "＞　#{word}　＜\n" +
-                        "￣#{ 'Ｙ' * (len + 1) }￣"
+                        "￣#{ 'Ｙ^' * (len) }Ｙ￣"
         response.reply(suddenly_word)
       end
 
