@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class Iroiro < Handler
 
-      route(/^突然の/i, :suddenly) 
+      route(/^突然の/, :suddenly) 
       def suddenly(response)
         word = response.args.join
         word = "死" if word.nil?
@@ -12,6 +12,12 @@ module Lita
         (word.length).times{suddenly_word += "Y^"}
         suddenly_word += "Y￣"
         response.reply(suddenly_word)
+      end
+
+      route(/ねー$|ねー。$/, :consent)
+      def consent(response)
+        reply_list = %w(わかる それな あっ わかるわ～ わかる、本質からわかる。わかってしまったのだ… そうだよね～ はいわかりました！ 直感でわかったけど、じっくり考えて深く理解した ん～！まさかそう思ってるひとがりったん以外にもいたとは！ かなりわかる わかった！一番わかった！ さわやかなわかり わかるという感じか 軽やかなわかり そう げにげに 自動的にわかった).freeze
+        response.reply(reply_list.sample)
       end
 
       route(/info message/i, :info_message)
