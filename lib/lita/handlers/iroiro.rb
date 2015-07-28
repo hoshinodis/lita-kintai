@@ -4,13 +4,13 @@ module Lita
 
       route(/^突然の/, :suddenly) 
       def suddenly(response)
-        word = response.args.join
-        word = "死" if word.nil?
-        suddenly_word = "＿"
-        (word.length + 2).times{suddenly_word += "人"}
-        suddenly_word += "＿\n＞ 突然の#{word} ＜\n￣"
-        (word.length).times{suddenly_word += "Y^"}
-        suddenly_word += "Y￣"
+        word = response.matches[0]
+        len = word.to_s.split('').map { |c|
+              c.bytes.length > 1 ? 2 : 1
+              }.inject(:+) / 2
+        suddenly_word = "＿#{ '人' * (len + 2) }＿\n" +
+                        "＞　#{word}　＜\n" +
+                        "￣#{ 'Y^' * (len + 1) }Y￣"
         response.reply(suddenly_word)
       end
 
