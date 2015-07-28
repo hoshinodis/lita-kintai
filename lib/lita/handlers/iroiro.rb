@@ -2,9 +2,9 @@ module Lita
   module Handlers
     class Iroiro < Handler
 
-      route(/^突然の/, :suddenly) 
+      route(/^突然の.*/, :suddenly) 
       def suddenly(response)
-        word = response.matches.join
+        word = response.matches[0]
         len = word.to_s.split('').map { |c|
               c.bytes.length > 1 ? 2 : 1
               }.inject(:+) / 2
