@@ -8,9 +8,9 @@ module Lita
         len = word.to_s.split('').map { |c|
               c.bytes.length > 1 ? 2 : 1
               }.inject(:+) / 2
-        suddenly_word = "＿#{ '人' * (len + 2) }＿\n" +
+        suddenly_word = "＿#{ '人' * (len + 1) }＿\n" +
                         "＞　#{word}　＜\n" +
-                        "￣#{ 'Y^' * (len + 1) }Y￣"
+                        "￣#{ 'Ｙ' * (len + 1) }￣"
         response.reply(suddenly_word)
       end
 
