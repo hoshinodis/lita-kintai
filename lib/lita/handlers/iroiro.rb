@@ -4,7 +4,7 @@ module Lita
 
       route(/^突然の/, :suddenly) 
       def suddenly(response)
-        word = response.matches[0]
+        word = response.matches.join
         len = word.to_s.split('').map { |c|
               c.bytes.length > 1 ? 2 : 1
               }.inject(:+) / 2
