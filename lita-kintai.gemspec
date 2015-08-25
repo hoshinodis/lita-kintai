@@ -2,11 +2,11 @@ Gem::Specification.new do |spec|
   spec.name          = "lita-kintai"
   spec.version       = "0.1.0"
   spec.authors       = ["hoshinodis"]
-  spec.email         = ["hoshino.daisuke@miraitsystems.jp"]
-  spec.description   = "TODO: Add a description"
-  spec.summary       = "TODO: Add a summary"
-  spec.homepage      = "TODO: Add a homepage"
-  spec.license       = "TODO: Add a license"
+  spec.email         = ["okonomisentai@gmail.com"]
+  spec.description   = "lita make a kintai management"
+  spec.summary       = "lita make a kintai management"
+  spec.homepage      = "https://github.com/hoshinodis/lita-kintai"
+  spec.license       = "MIT"
   spec.metadata      = { "lita_plugin_type" => "handler" }
 
   spec.files         = `git ls-files`.split($/)
