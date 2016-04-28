@@ -2,6 +2,26 @@ module Lita
   module Handlers
     class Iroiro < Handler
 
+      route(/^sql\p{blank}+(?<sql_string>.[\s\S]*)/i, :sql_query)
+      def sql_query(response)
+        sql = response.match_data['sql_string']
+        result = `mysql -uroot -proot adplan -e'#{sql}'`
+        reply = "```\n#{result}\n```"
+        response.reply(reply)
+      end
+
+      route(/まゆしぃ/, :hello)
+      def hello(response)
+        reply = "トゥットゥルー"
+        response.reply_with_mention(reply)
+      end
+
+      route(/収束/, :flag)
+      def flag(response)
+        reply = "あれー？まゆしぃの懐中時計止まっちゃってる"
+        response.reply(reply)
+      end
+
       route(/^突然の.*/, :suddenly) 
       def suddenly(response)
         word = response.matches[0]
@@ -18,11 +38,11 @@ module Lita
       def consent(response)
         reply_list = %w(わかる それな あっ わかるわ～ わかる、本質からわかる。 
           わかってしまったのだ… そうだよね～ 直感でわかったけど、じっくり考えて深く理解した 
-          ん～！まさかそう思ってるひとがりったん以外にもいたとは！ かなりわかる わかった！一番わかった！ 
+          ん～！まさかそう思ってるひとがまゆしぃ以外にもいたとは！ かなりわかる わかった！一番わかった！ 
           さわやかなわかり わかるという感じか 軽やかなわかり そう げにげに 自動的にわかった 
-          はいりったんわかるわかる わかる～わかるわ～～～ 
+          はいまゆしぃわかるわかる わかる～わかるわ～～～ 
           うんわかるよ、女の人ってそうだからすぐ論点ずれていくよね。勘弁して欲しいよね。 
-          知らんがな そう それ言おうと思ってた わかる気がする うん それを求めてた 全りったんがわかる
+          知らんがな そう それ言おうと思ってた わかる気がする うん それを求めてた 全まゆしぃがわかる
           ですよね！ ・・・うん それがわかるんだな～ （笑） わからんでもない それいい、心にくる 
           それはわからない 言いすぎ言いすぎ(笑) わかりにく…わかるけどさ…… えっホントに さいですか 
           みんなもわかると思う わかりすぎて声も出ない 逆にね まってまってちょっとついていけてない 
@@ -46,7 +66,8 @@ module Lita
       route(/info user/i, :info_user)
       def info_user(response)
         reply = "#{response.user.name}"
-        response.reply(reply)
+        user_id = response.message.source.user.id.to_s
+        response.reply(reply + ' ' + user_id)
       end
     end
 

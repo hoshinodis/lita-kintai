@@ -1,2 +1,5 @@
-require "lita/handlers/kintai"
-require "lita/handlers/iroiro"
+require 'lita/handlers/kintai'
+require 'lita/handlers/iroiro'
+require 'lita/handlers/hacker_of_the_month'
+require 'lita/handlers/lita_esa'
+require 'lita/handlers/train_info'
