@@ -53,7 +53,7 @@ module Lita
       def many_route(routes)
         <<-"EOS"
 絞り込めなかったよー。下のどれかかなぁ？
-#{routes.map { |route| "  * #{route[:name]}" }.join("\n") }}
+#{routes.map { |route| "  * #{route[:name]}" }.join("\n") }
         EOS
       end
 
