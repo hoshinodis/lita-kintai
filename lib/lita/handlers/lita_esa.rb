@@ -40,6 +40,47 @@ module Lita
         response.reply(reply)
       end
 
+
+      route(/^esa\s+ranking/, :ranking)
+      def ranking(response)
+        client = Esa::Client.new(access_token: config.esa_api_token, current_team: config.esa_team)
+
+        page_unit = 100
+        post_count = client.posts(per_page: page_unit).body['total_count']
+        results = (1..((post_count / page_unit) + 1)).each_with_object([]) do |i, results|
+          memo = client.posts(per_page: post_count, page: i).body["posts"].group_by{|e|e["created_by"]["screen_name"]}.each_with_object([]) do |e, memo|
+            memo << {
+                name: e.first,
+                number: e.last.count,
+                star: e.last.reduce(0) { |a, e|a = a + e["stargazers_count"].to_i }
+            }
+          end
+          results << memo
+        end
+
+        response.reply "Posts count ranking"
+        results.flatten
+            .reduce(Hash.new(0)){ |a, e|a[e[:name]] += e[:number];a }
+            .sort { |(k1, v1), (k2, v2)| v2 <=> v1 }
+            .chunk { |e| e.last }
+            .each.with_index(1) { |e, i|
+          names = e.last.map{ |e|e.first }.join(',')
+          count = e.first
+          response.reply "No.#{i} #{count} - #{names}"
+        }
+
+        response.reply "Star count ranking"
+        results.flatten
+            .reduce(Hash.new(0)){ |a, e|a[e[:name]] += e[:star];a }
+            .sort { |(k1, v1), (k2, v2)| v2 <=> v1 }
+            .chunk { |e| e.last }
+            .each.with_index(1) { |e, i|
+          names = e.last.map{ |e|e.first }.join(',')
+          count = e.first
+          response.reply "No.#{i} #{count} - #{names}"
+        }
+      end
+
     end
 
     Lita.register_handler(LitaEsa)
