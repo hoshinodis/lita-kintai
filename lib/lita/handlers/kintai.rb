@@ -23,7 +23,7 @@ module Lita
           return response.reply('家に帰らないと出社はできないんだよ') if result['start_at'] == result['end_at']
         end
 
-        unless result['remote_start_at'].nil?
+        unless result.nil? && result['remote_start_at'].nil?
           return response.reply('リモートが終わらないと出社はできないんだよ') if result['remote_start_at'] == result['remote_end_at']
         end
 
