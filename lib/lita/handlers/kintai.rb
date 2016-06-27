@@ -44,7 +44,9 @@ module Lita
         select_query = "select * from #{TABLE_NAME} where id = '#{response.user.id}' order by start_at desc"
         result = client.query(select_query).first
         if result['remote_start_at'].nil?
-          update_query = "update #{TABLE_NAME} set end_at = '#{datetime(time)}', syussya_time = #{((time - result['start_at'])/60).to_i} where id = '#{response.user.id}' and end_at = '#{datetime(result['start_at'])}'"
+          syussya_time = ((time - result['start_at'])/60).to_i
+          syussya_time = syussya_time - 60 if syussya_time >= (8 * 60)
+          update_query = "update #{TABLE_NAME} set end_at = '#{datetime(time)}', syussya_time = #{syussya_time} where id = '#{response.user.id}' and end_at = '#{datetime(result['start_at'])}'"
           client.query(update_query) if result['start_at'] == result['end_at']
           reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に退社しました"
           return response.reply(reply)
@@ -85,6 +87,7 @@ module Lita
         result = client.query(select_query).first
         unless result['remote_start_at'].nil?
           syussya_time = ((time - result['start_at'])/60).to_i
+          syussya_time = syussya_time - 60 if syussya_time >= (8 * 60)
           update_query = "update #{TABLE_NAME} set end_at = '#{datetime(time)}', remote_end_at = '#{datetime(time)}', syussya_time = #{syussya_time}, remote_time = #{syussya_time} where id = '#{response.user.id}' and end_at = '#{datetime(result['start_at'])}'"
           client.query(update_query) if result['remote_start_at'] == result['remote_end_at']
           reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}にリモート終了しました"
