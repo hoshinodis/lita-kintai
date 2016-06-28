@@ -55,7 +55,6 @@ module Lita
         response.reply('あれー？出社してないみたいだよ')
       end
 
-      # todo:リモスタ start_at使う,全日リモート対応もある
       route(/^リモおは$|^リモートがんばるぞい|^リモはじ|((^リモート|^りもーと)+(はじめ|始め))/, :start_remote_work)
       def start_remote_work(response)
         time = Time.now
@@ -85,7 +84,7 @@ module Lita
         client = connect
         select_query = "select * from #{TABLE_NAME} where id = '#{response.user.id}' order by start_at desc"
         result = client.query(select_query).first
-        unless result['remote_start_at'].nil?
+        if !result['remote_start_at'].nil? && result['remote_start_at'] == result['remote_end_at']
           syussya_time = ((time - result['start_at'])/60).to_i
           syussya_time = syussya_time - 60 if syussya_time >= (8 * 60)
           update_query = "update #{TABLE_NAME} set end_at = '#{datetime(time)}', remote_end_at = '#{datetime(time)}', syussya_time = #{syussya_time}, remote_time = #{syussya_time} where id = '#{response.user.id}' and end_at = '#{datetime(result['start_at'])}'"
