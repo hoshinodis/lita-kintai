@@ -43,7 +43,7 @@ module Lita
         client = connect
         select_query = "select * from #{TABLE_NAME} where id = '#{response.user.id}' order by start_at desc"
         result = client.query(select_query).first
-        if result['remote_start_at'].nil?
+        if result['remote_start_at'].nil? && result['start_at'] == result['end_at']
           syussya_time = ((time - result['start_at'])/60).to_i
           syussya_time = syussya_time - 60 if syussya_time >= (8 * 60)
           update_query = "update #{TABLE_NAME} set end_at = '#{datetime(time)}', syussya_time = #{syussya_time} where id = '#{response.user.id}' and end_at = '#{datetime(result['start_at'])}'"
