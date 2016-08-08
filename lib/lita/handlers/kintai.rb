@@ -11,7 +11,7 @@ module Lita
         time.strftime('%F %T')
       end
 
-      route(/^おは$|^がんばるぞい|^しごはじ|((^お仕事|^おしごと)+(はじめ|始め))/, :start_work)
+      route(/\Aおは$|\Aがんばるぞい|\Aしごはじ|((\Aお仕事|\Aおしごと)+(はじめ|始め))/, :start_work)
       def start_work(response)
         time = Time.now
 
@@ -34,7 +34,7 @@ module Lita
         response.reply(reply)
       end
 
-      route(/^おつ$|^がんばったぞい|^しごとわた|((^お仕事|^おしごと)+おしまい)/, :end_work)
+      route(/\Aおつ$|\Aがんばったぞい|\Aしごとわた|((\Aお仕事|\Aおしごと)+おしまい)/, :end_work)
       def end_work(response)
         time = Time.now
 
@@ -55,7 +55,7 @@ module Lita
         response.reply('あれー？出社してないみたいだよ')
       end
 
-      route(/^リモおは$|^リモートがんばるぞい|^リモはじ|((^リモート|^りもーと)+(はじめ|始め))/, :start_remote_work)
+      route(/\Aリモおは$|\Aリモートがんばるぞい|\Aリモはじ|((\Aリモート|^りもーと)+(はじめ|始め))/, :start_remote_work)
       def start_remote_work(response)
         time = Time.now
 
@@ -75,7 +75,7 @@ module Lita
       end
 
       # todo:リモおわ リモートは1日に複数回訪れる
-      route(/^リモおつ$|^リモートがんばったぞい|^リモわた|((^リモート|^りもーと)+おしまい)/, :end_remote_work)
+      route(/\Aリモおつ$|\Aリモートがんばったぞい|\Aリモわた|((\Aリモート|^りもーと)+おしまい)/, :end_remote_work)
       def end_remote_work(response)
         time = Time.now
 
