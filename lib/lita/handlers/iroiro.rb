@@ -16,7 +16,7 @@ module Lita
         response.reply_with_mention(reply)
       end
       
-      route(/^工数見積もり$/, :estimate)
+      route(/工数見積もり/, :estimate)
       def estimate(response)
         reply_list = %w(過去10年で最高と言われた01年を上回る出来栄えで1995年以来の工数 110年ぶりの当たり機能
                         仕様が強く中々の工数 タフな03年とはまた違い、本来の軽さを備え、これぞ『ザ・見積もり』
