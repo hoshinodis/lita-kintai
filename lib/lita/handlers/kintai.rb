@@ -96,11 +96,27 @@ module Lita
         response.reply('あれー？リモートしてないみたいだよ')
       end
 
+      def next_month(time)
+        if time.month == 12
+          Time.new(time.year + 1, 1, 1)
+        else
+          Time.new(time.year, time.month + 1, 1)
+        end
+      end
+
+      def prev_month(time)
+        if time.month == 1
+          Time.new(time.year - 1, 12, 1)
+        else
+          Time.new(time.year, time.month - 1, 1)
+        end
+      end
+
       route(/^今月+(しごと|仕事)+した+(\?|？)$/, :monthly_work)
       def monthly_work(response)
         time = Time.now
         start_at = datetime(Time.new(time.year, time.month, 1))
-        end_at = datetime(Time.new(time.year, time.month + 1, 1))
+        end_at = datetime(next_month(time))
         client = connect
         select_query = "select sum(remote_time) remote, sum(syussya_time) syussya, sum(warimashi_time) warimashi from #{TABLE_NAME} where id = '#{response.user.id}' and start_at between '#{start_at}' and '#{end_at}'"
         result = client.query(select_query).first
@@ -111,7 +127,7 @@ module Lita
       route(/^先月+(しごと|仕事)+した+(\?|？)$/, :last_monthly_work)
       def last_monthly_work(response)
         time = Time.now
-        start_at = datetime(Time.new(time.year, time.month - 1, 1))
+        start_at = datetime(prev_month(time))
         end_at = datetime(Time.new(time.year, time.month, 1))
         client = connect
         select_query = "select sum(remote_time) remote, sum(syussya_time) syussya, sum(warimashi_time) warimashi from #{TABLE_NAME} where id = '#{response.user.id}' and start_at between '#{start_at}' and '#{end_at}'"
