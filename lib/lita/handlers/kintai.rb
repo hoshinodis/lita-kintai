@@ -48,7 +48,7 @@ module Lita
           syussya_time = syussya_time - 60 if syussya_time >= (8 * 60)
           update_query = "update #{TABLE_NAME} set end_at = '#{datetime(time)}', syussya_time = #{syussya_time} where id = '#{response.user.id}' and end_at = '#{datetime(result['start_at'])}'"
           client.query(update_query) if result['start_at'] == result['end_at']
-          reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に退社しました"
+          reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に退勤しました"
           return response.reply(reply)
         end
 
