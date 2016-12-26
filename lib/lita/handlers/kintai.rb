@@ -75,7 +75,7 @@ module Lita
       end
 
       # todo:リモおわ リモートは1日に複数回訪れる
-      route(/\Aリモおつ$|\Aリモートがんばったぞい|\Aリモわた|((\Aリモート|^りもーと)+おしまい)/, :end_remote_work)
+      route(/\Aリモおつ$|\Aリモートがんばったぞい|\Aリモわた|\Aリモおわ|((\Aリモート|^りもーと)+おしまい)/, :end_remote_work)
       def end_remote_work(response)
         time = Time.now
 
