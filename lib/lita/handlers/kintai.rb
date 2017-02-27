@@ -151,6 +151,16 @@ module Lita
           end
         end
         response.reply(reply)
+        
+        select_query = "select name from #{TABLE_NAME} a join lita_kintai.ikku b on a.id = b.id where remote_start_at between '#{start_at}' and '#{time}' group by name"
+        results = client.query(select_query)
+        reply = "リモート\n"
+        results.each do |row|
+          row.each do |key, value|
+            reply = reply + "#{value} \n"
+          end
+        end
+        response.reply(reply)
       end
 
       route(/(しごと|仕事).*ない$/, :grieve_work)
