@@ -144,7 +144,7 @@ module Lita
         # name属性持たせなかったの失敗したあ
         select_query = "select name from #{TABLE_NAME} a join lita_kintai.ikku b on a.id = b.id where start_at between '#{start_at}' and '#{time}' group by name"
         results = client.query(select_query)
-        reply = ''
+        reply = "=== 出社 ===\n"
         results.each do |row|
           row.each do |key, value|
             reply = reply + "#{value} \n"
@@ -154,7 +154,7 @@ module Lita
         
         select_query = "select name from #{TABLE_NAME} a join lita_kintai.ikku b on a.id = b.id where remote_start_at between '#{start_at}' and '#{time}' group by name"
         results = client.query(select_query)
-        reply = "リモート\n"
+        reply = "=== リモート ===\n"
         results.each do |row|
           row.each do |key, value|
             reply = reply + "#{value} \n"
