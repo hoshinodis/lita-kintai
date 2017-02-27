@@ -142,7 +142,7 @@ module Lita
         start_at = datetime(Time.new(time.year, time.month, time.day))
         client = connect
         select_query = "select name from #{TABLE_NAME} where start_at between '#{start_at}' and '#{time}' group by name"
-        result = client.query(select_query)
+        results = client.query(select_query)
         reply = ''
         results.each do |row|
           row.each do |key, value|
