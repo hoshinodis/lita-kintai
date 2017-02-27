@@ -136,12 +136,13 @@ module Lita
         response.reply(reply)
       end
       
-      route(/^今日+(は誰|はだれ|誰|だれ)+(いる|居る)+(\?|？)$/, :monthly_work)
-      def monthly_work(response)
+      route(/^今日+(は誰|はだれ|誰|だれ)+(いる|居る)+(\?|？)$/, :whos_work_today)
+      def whos_work_today(response)
         time = Time.now
         start_at = datetime(Time.new(time.year, time.month, time.day))
         client = connect
-        select_query = "select name from #{TABLE_NAME} where start_at between '#{start_at}' and '#{time}' group by name"
+        # name属性持たせなかったの失敗したあ
+        select_query = "select name from #{TABLE_NAME} a join lita_kintai.ikku b on a.id = b.id where start_at between '#{start_at}' and '#{time}' group by name"
         results = client.query(select_query)
         reply = ''
         results.each do |row|
