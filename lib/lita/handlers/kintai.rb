@@ -143,10 +143,13 @@ module Lita
         client = connect
         select_query = "select name from #{TABLE_NAME} where start_at between '#{start_at}' and '#{time}' group by name"
         result = client.query(select_query)
-        result.each do |name|
-          reply = "#{result['syussya']}"
-          response.reply(reply)
+        reply = ''
+        results.each do |row|
+          row.each do |key, value|
+            reply = reply + "#{value} \n"
+          end
         end
+        response.reply(reply)
       end
 
       route(/(しごと|仕事).*ない$/, :grieve_work)
