@@ -135,6 +135,19 @@ module Lita
         reply = "#{response.user.name}さんは、先月 #{format('%.1f', result['syussya'].to_f / 60.0)} 時間働きました（内 リモート:#{format('%.1f', result['remote'].to_f / 60.0)} 時間, 割増:#{format('%.1f', result['warimashi'].to_f / 60.0)} 時間）。"
         response.reply(reply)
       end
+      
+      route(/^今日+(は誰|はだれ|誰|だれ)+(いる|居る)+(\?|？)$/, :monthly_work)
+      def monthly_work(response)
+        time = Time.now
+        start_at = datetime(Time.new(time.year, time.month, time.day))
+        client = connect
+        select_query = "select name from #{TABLE_NAME} where start_at between '#{start_at}' and '#{time}' group by name"
+        result = client.query(select_query)
+        result.each |name| do
+          reply = "#{result['syussya']}"
+          response.reply(reply)
+        end
+      end
 
       route(/(しごと|仕事).*ない$/, :grieve_work)
       def grieve_work(response)
