@@ -28,7 +28,7 @@ module Lita
         end
 
         # 出社出社
-        insert_query = "insert into #{TABLE_NAME} (id, start_at, end_at) values('#{response.user.id}', '#{datetime(time)}', '#{datetime(time)}')"
+        insert_query = "insert into #{TABLE_NAME} (id, name, start_at, end_at) values('#{response.user.id}', '#{response.user.name}', '#{datetime(time)}', '#{datetime(time)}')"
         client.query(insert_query)
         reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}に出社しました"
         response.reply(reply)
@@ -68,7 +68,7 @@ module Lita
         end
 
         # 出社出社
-        insert_query = "insert into #{TABLE_NAME} (id, start_at, end_at, remote_start_at, remote_end_at) values('#{response.user.id}', '#{datetime(time)}', '#{datetime(time)}', '#{datetime(time)}', '#{datetime(time)}')"
+        insert_query = "insert into #{TABLE_NAME} (id, name, start_at, end_at, remote_start_at, remote_end_at) values('#{response.user.id}', '#{response.user.name}', '#{datetime(time)}', '#{datetime(time)}', '#{datetime(time)}', '#{datetime(time)}')"
         client.query(insert_query)
         reply = "#{response.user.name}さんが#{time.strftime("%H時%M分")}にリモート開始しました"
         response.reply(reply)
@@ -142,7 +142,7 @@ module Lita
         start_at = datetime(Time.new(time.year, time.month, time.day))
         client = connect
         # name属性持たせなかったの失敗したあ
-        select_query = "select name from #{TABLE_NAME} a join lita_kintai.ikku b on a.id = b.id where start_at between '#{start_at}' and '#{time}' group by name"
+        select_query = "select name from #{TABLE_NAME} where start_at between '#{start_at}' and '#{time}' and end_at <= '#{time}' group by name"
         results = client.query(select_query)
         reply = "=== 出社 ===\n"
         results.each do |row|
@@ -152,7 +152,7 @@ module Lita
         end
         response.reply(reply)
         
-        select_query = "select name from #{TABLE_NAME} a join lita_kintai.ikku b on a.id = b.id where remote_start_at between '#{start_at}' and '#{time}' group by name"
+        select_query = "select name from #{TABLE_NAME} where remote_start_at between '#{start_at}' and '#{time}' and remote_end_at <= '#{time}' group by name"
         results = client.query(select_query)
         reply = "=== リモート ===\n"
         results.each do |row|
