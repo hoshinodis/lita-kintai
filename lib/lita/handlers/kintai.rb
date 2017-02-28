@@ -142,7 +142,7 @@ module Lita
         start_at = datetime(Time.new(time.year, time.month, time.day))
         client = connect
         # name属性持たせなかったの失敗したあ
-        select_query = "select name from #{TABLE_NAME} where start_at between '#{start_at}' and '#{time}' and end_at <= '#{time}' group by name"
+        select_query = "select name from #{TABLE_NAME} where start_at between '#{start_at}' and '#{time}' and end_at = start_at group by name"
         results = client.query(select_query)
         reply = "=== 出社 ===\n"
         results.each do |row|
@@ -152,7 +152,7 @@ module Lita
         end
         response.reply(reply)
         
-        select_query = "select name from #{TABLE_NAME} where remote_start_at between '#{start_at}' and '#{time}' and remote_end_at <= '#{time}' group by name"
+        select_query = "select name from #{TABLE_NAME} where remote_start_at between '#{start_at}' and '#{time}' and remote_end_at = remote_start_at group by name"
         results = client.query(select_query)
         reply = "=== リモート ===\n"
         results.each do |row|
