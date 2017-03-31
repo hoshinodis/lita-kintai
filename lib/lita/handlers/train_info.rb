@@ -47,7 +47,7 @@ module Lita
       end
 
       def list_url
-        "http://transit.loco.yahoo.co.jp/traininfo/area/4/"
+        "https://transit.yahoo.co.jp/traininfo/area/4/"
       end
 
       def many_route(routes)
