@@ -27,8 +27,8 @@ module Lita
       end
 
       def cause_delay(route)
-        Nokogiri::HTML(open(route[:href]))
-            .css('#mdServiceStatus p').text.gsub('http:', 'https:')
+        Nokogiri::HTML(open(route[:href].gsub('http:', 'https:')))
+            .css('#mdServiceStatus p').text
       end
 
       def delay_list
