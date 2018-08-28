@@ -2,7 +2,7 @@ module Lita
   module Handlers
     class Iroiro < Handler
 
-      route(/^sql\p{blank}+(?<sql_string>.[\s\S]*)/i, :sql_query)
+      route(/^sql\p{blank}+(?<sql_string>.[\s\S]*)/i, :sql_query, command: true)
       def sql_query(response)
         sql = response.match_data['sql_string']
         result = `mysql -uroot -proot adplan -e'#{sql}'`
