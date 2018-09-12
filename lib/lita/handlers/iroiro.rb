@@ -5,6 +5,8 @@ module Lita
       route(/^sql\p{blank}+(?<sql_string>.[\s\S]*)/i, :sql_query, command: true)
       def sql_query(response)
         sql = response.match_data['sql_string']
+        sql = '' if(sql.downcase.include?('create') || sql.downcase.include?('delete') || sql.downcase.include?('drop') || sql.downcase.include?('truncate') || sql.downcase.include?('update'))
+        
         result = `mysql -uroot -proot adplan -e'#{sql}'`
         reply = "```\n#{result}\n```"
         response.reply(reply)
