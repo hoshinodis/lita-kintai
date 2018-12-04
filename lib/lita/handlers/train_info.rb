@@ -10,6 +10,7 @@ module Lita
       def call(response)
         @@route = response.match_data['route']
         return response.reply("進捗だめで〜す") if @@route == "進捗"
+        return response.reply("15分ほどの遅れが生じています") if @@route == "CTO面談"
 
         list = delay_list
         return response.reply(found_route) if list.length == 0
